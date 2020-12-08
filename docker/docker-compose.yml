@@ -15,9 +15,12 @@ services:
       - memcached
       - database
     environment:
+      DB_HOST: database
       DB_USER: mdid
       DB_PASSWORD: supersecretpassword
       DB_NAME: mdid
+      SECRET_KEY: yaePhaegie0ai3afainieBeed2Ooph7Od7Eequaegu7ohTahviec
+      CAS_SERVER_URL: https://cas.wm.edu/cas/
     stdin_open: true
     tty: true
   solr:

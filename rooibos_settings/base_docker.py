@@ -8,6 +8,9 @@ import pymysql
 from configparser import RawConfigParser
 
 
+pymysql.install_as_MySQLdb()
+
+
 install_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
 
 if install_dir not in sys.path:
@@ -20,11 +23,8 @@ TEMPLATE_DEBUG = DEBUG
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-config = RawConfigParser()
-config.read(os.getenv('CONFIG_FILE', BASE_DIR + '/docker/config.ini'))
-
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = config.get('SECRET', 'SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Add the hostname of your server, or keep '*' to allow all host names
 ALLOWED_HOSTS = ['*']
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 # If the value of DB_PASSWORD or the PASSWORD setting in the config file
 # is a valid file path, use the contents of the file as the database password,
 # otherwise use the value provided.
-db_password = os.getenv('DB_PASSWORD', config.get('DATABASE', 'PASSWORD'))
+db_password = os.getenv('DB_PASSWORD', '')
 if os.path.isfile(db_password):
     with open(db_password, 'r') as password_file:
         db_password = password_file.read()
@@ -42,10 +42,10 @@ if os.path.isfile(db_password):
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', config.get('DATABASE', 'NAME')),
-        'USER': os.getenv('DB_USER', config.get('DATABASE', 'USER')),
+        'NAME': os.getenv('DB_NAME', ''),
+        'USER': os.getenv('DB_USER', ''),
         'PASSWORD': db_password,
-        'HOST': os.getenv('DB_HOST', config.get('DATABASE', 'HOST')),
+        'HOST': os.getenv('DB_HOST', ''),
         'PORT': '',
         'OPTIONS': {
             'use_unicode': True,
@@ -202,7 +202,7 @@ INSTALLED_APPS = (
     'rooibos.ui',
     'rooibos.viewers',
     'rooibos.help',
-    'rooibos.presentation',
+    'rooibos.impersonate',
     'rooibos.presentation',
     'rooibos.statistics',
     'rooibos.federatedsearch',

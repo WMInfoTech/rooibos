@@ -1,4 +1,4 @@
-FROM solr:7.7.3-slim
+FROM solr:7.7-slim
 
 RUN mkdir -p /opt/solr/data/mdid
 
