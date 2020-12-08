@@ -108,6 +108,8 @@
                 {% if SHIB_LOGOUT_URL %}
                     <li><a href="{% url "logout" %}?next={{ SHIB_LOGOUT_URL|urlencode }}">Log out</a></li>
                 {% endif %}
+            {% elif CAS_SERVER_URL %}
+                <li><a href="{% url "cas_ng_logout" %}?next={% url "main" %}">Log out</a></li>
             {% else %}
                 <li><a href="{% url "logout" %}?next={% url "main" %}">Log out</a></li>
             {% endif %}
@@ -119,8 +121,8 @@
                     <li><a href="{% url "login" %}?next={{ request.get_full_path }}">Local login</a></li>
                 {% else %}
                     {% if CAS_SERVER_URL %}
-                    <li><a href="{% url "login" %}?next={{ request.get_full_path }}">CAS Login</a></li>
-                    <li><a href="{% url "local-login" %}?next={{ request.get_full_path }}">Local Login</a></li>
+                    <li><a href="{% url "cas_ng_login" %}?next={{ request.get_full_path }}">CAS Login</a></li>
+                    <li><a href="{% url "login" %}?next={{ request.get_full_path }}">Local Login</a></li>
                     {% else %}
                     <li><a href="{% url "login" %}?next={{ request.get_full_path }}">Login</a></li>
                     {% endif %}

@@ -1,9 +1,9 @@
-version: '3.2'
+version: '3.5'
 
 services:
   mdid:
     build: ../.
-    image: wmit/mdid:3.2
+    image: wmit/mdid:3.5
     ports:
       - target: 8080
         published: 8080
@@ -18,24 +18,14 @@ services:
       DB_USER: mdid
       DB_PASSWORD: supersecretpassword
       DB_NAME: mdid
-  worker:
-    build: ../.
-    image: wmit/mdid:3.2
-    command: python manage.py runworkers
-    healthcheck:
-      disable: true
-    depends_on:
-      - solr
-      - rabbitmq
-      - memcached
-      - database
+    stdin_open: true
+    tty: true
   solr:
-    build: ../solr4/
-    image: wmit/solr4-mdid
+    build: ../solr7/
   rabbitmq:
-    image: rabbitmq:3.6-alpine
+    image: rabbitmq:3.8-alpine
   memcached:
-    image: memcached:1.4-alpine
+    image: memcached:1.6-alpine
     command: memcached -m 128
   database:
     image: mysql:5.7
