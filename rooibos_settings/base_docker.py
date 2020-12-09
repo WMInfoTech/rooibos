@@ -5,7 +5,17 @@ import os
 import sys
 import re
 import pymysql
-from configparser import RawConfigParser
+
+
+def get_env_setting(env_var):
+    if setting := os.getenv(env_var):
+        if os.path.isfile(setting):
+            with open(setting, 'r') as fd:
+                return str(fd.read())
+
+        return setting
+
+    return ''
 
 
 pymysql.install_as_MySQLdb()
@@ -24,7 +34,7 @@ TEMPLATE_DEBUG = DEBUG
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'default'
 
 # Add the hostname of your server, or keep '*' to allow all host names
 ALLOWED_HOSTS = ['*']
@@ -32,20 +42,17 @@ ALLOWED_HOSTS = ['*']
 # If the value of DB_PASSWORD or the PASSWORD setting in the config file
 # is a valid file path, use the contents of the file as the database password,
 # otherwise use the value provided.
-db_password = os.getenv('DB_PASSWORD', '')
-if os.path.isfile(db_password):
-    with open(db_password, 'r') as password_file:
-        db_password = password_file.read()
+db_password = get_env_setting('DB_PASSWORD')
 
 # Database configuration
 # If environment variables aren't set then look in the config file
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME', ''),
-        'USER': os.getenv('DB_USER', ''),
-        'PASSWORD': db_password,
-        'HOST': os.getenv('DB_HOST', ''),
+        'NAME': get_env_setting('DB_NAME'),
+        'USER': get_env_setting('DB_USER'),
+        'PASSWORD': get_env_setting('DB_PASSWORD'),
+        'HOST': get_env_setting('DB_HOST'),
         'PORT': '',
         'OPTIONS': {
             'use_unicode': True,

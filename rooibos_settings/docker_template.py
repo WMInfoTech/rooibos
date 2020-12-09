@@ -9,18 +9,16 @@ from .base import *
 DEBUG = False
 
 # "https://cas.wm.edu/cas/"
-CAS_SERVER_URL = os.getenv('CAS_SERVER_URL', '')
+CAS_SERVER_URL = get_env_setting('CAS_SERVER_URL')
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'default')
-if os.path.isfile(SECRET_KEY):
-    with open(SECRET_KEY, 'r') as key_file:
-        SECRET_KEY = key_file.read()
+if SECRET_KEY := get_env_setting('SECRET_KEY') == '':
+    SECRET_KEY = 'default'
 
-CACHE_BACKEND = os.getenv('CACHE_BACKEND', '')
+CACHE_BACKEND = get_env_setting('CACHE_BACKEND')
 
-SOLR_URL = os.getenv('SOLR_URL', '')
+SOLR_URL = get_env_setting('SOLR_URL')
 
-HELP_URL = os.getenv('HELP_URL', '') # "http://mdid.org/help/"
+HELP_URL = get_env_setting('HELP_URL') # "http://mdid.org/help/"
 
 LOGO_URL = "/static/images/wmdid.png"
 FAVICON_URL = None
