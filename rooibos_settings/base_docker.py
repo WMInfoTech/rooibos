@@ -39,11 +39,6 @@ SECRET_KEY = 'default'
 # Add the hostname of your server, or keep '*' to allow all host names
 ALLOWED_HOSTS = ['*']
 
-# If the value of DB_PASSWORD or the PASSWORD setting in the config file
-# is a valid file path, use the contents of the file as the database password,
-# otherwise use the value provided.
-db_password = get_env_setting('DB_PASSWORD')
-
 # Database configuration
 # If environment variables aren't set then look in the config file
 DATABASES = {

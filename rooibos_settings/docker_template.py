@@ -48,8 +48,8 @@ AUTHENTICATION_BACKENDS = (
 
 # Needed to enable compression JS and CSS files
 COMPRESS = True
-MEDIA_URL = "/media/"
-MEDIA_ROOT = "rooibos/static/"
+MEDIA_URL = '/media/'
+MEDIA_ROOT = get_env_setting('MEDIA_ROOT')
 
 ADMINS = (
 #    ("Your name", "your@email.example"),
