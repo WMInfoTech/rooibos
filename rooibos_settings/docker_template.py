@@ -14,7 +14,7 @@ CAS_SERVER_URL = get_env_setting('CAS_SERVER_URL')
 if SECRET_KEY := get_env_setting('SECRET_KEY') == '':
     SECRET_KEY = 'default'
 
-CACHE_BACKEND = get_env_setting('CACHE_BACKEND')
+
 
 SOLR_URL = get_env_setting('SOLR_URL')
 
@@ -35,6 +35,14 @@ DATABASE_ENGINE = "mysql"
 DATABASE_OPTIONS = {
     "use_unicode": True,
     "charset": "utf8",
+}
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': get_env_setting('CACHE_BACKEND'),
+        'KEY_PREFIX': INSTANCE_NAME,
+    }
 }
 
 INSTALLED_APPS += ("django_cas_ng",)
