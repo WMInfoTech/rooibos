@@ -11,10 +11,9 @@ DEBUG = False
 # "https://cas.wm.edu/cas/"
 CAS_SERVER_URL = get_env_setting('CAS_SERVER_URL')
 
-if SECRET_KEY := get_env_setting('SECRET_KEY') == '':
+SECRET_KEY = get_env_setting('SECRET_KEY')
+if SECRET_KEY == '':
     SECRET_KEY = 'default'
-
-
 
 SOLR_URL = get_env_setting('SOLR_URL')
 
