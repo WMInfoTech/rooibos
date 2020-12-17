@@ -23,6 +23,7 @@ COPY . /opt/mdid
 WORKDIR /opt/mdid
 
 ENV DJANGO_SETTINGS_MODULE="rooibos_settings.local_settings"
+ENV PYTHONPATH="/opt/mdid:/opt/mdid/rooibos"
 
 # Install python packages and cleanup
 RUN pip install --no-cache-dir --upgrade -r requirements.txt \
