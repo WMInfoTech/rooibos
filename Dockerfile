@@ -11,7 +11,7 @@ HEALTHCHECK CMD curl -f http://localhost:8080/ || exit 1
 RUN apt-get update \
     && apt-get install -y --no-install-recommends libjpeg-dev libfreetype6-dev \
     libmariadb-dev python3-dev libldap2-dev libsasl2-dev supervisor \
-    ffmpeg openjdk-11-jre-headless libssl-dev poppler-utils \
+    ffmpeg openjdk-11-jre-headless libssl-dev poppler-utils cron \
     && ln -s -f /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib/ \
     && ln -s -f /usr/lib/x86_64-linux-gnu/libz.so /usr/lib/ \
     && ln -s -f /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib/ \
@@ -33,6 +33,11 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt \
     && python manage.py collectstatic --noinput \
     && apt-get purge -y build-essential autoconf automake gcc g++ \
     && apt-get autoremove -y
+
+# set up cron jobs
+COPY docker/wrapper.sh /opt/mdid
+COPY docker/crontab /opt/mdid
+RUN crontab -u www-data /opt/mdid/crontab
 
 EXPOSE 8080
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "rooibos.wsgi:application", "--log-config", "docker/gunicorn-logging.conf"]
