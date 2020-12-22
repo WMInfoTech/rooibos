@@ -39,5 +39,7 @@ COPY docker/wrapper.sh /opt/mdid
 COPY docker/crontab /opt/mdid
 RUN crontab -u www-data /opt/mdid/crontab
 
+COPY rooibos_settings/supervisor.conf /etc/supervisor/conf.d/mdid.conf
+
 EXPOSE 8080
 CMD ["gunicorn", "-b", "0.0.0.0:8080", "rooibos.wsgi:application", "--log-config", "docker/gunicorn-logging.conf"]
