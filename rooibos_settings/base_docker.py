@@ -56,6 +56,7 @@ DATABASES = {
     }
 }
 
+CELERY_RESULT_BACKEND = 'django-db'
 
 RABBITMQ_OPTIONS = {
     'host': 'rabbitmq',
@@ -529,7 +530,5 @@ LOGGING = {
         },
     },
 }
-
-CELERY_RESULT_BACKEND = 'django-db'
 
 FORGET_PRESENTATION_BROWSE_FILTER = False

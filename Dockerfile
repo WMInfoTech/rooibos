@@ -35,11 +35,14 @@ RUN pip install --no-cache-dir --upgrade -r requirements.txt \
     && apt-get autoremove -y
 
 # set up cron jobs
-COPY docker/wrapper.sh /opt/mdid
-COPY docker/crontab /opt/mdid
+COPY ./docker/wrapper.sh /opt/mdid
+COPY ./docker/crontab /opt/mdid
 RUN crontab -u www-data /opt/mdid/crontab
 
 COPY rooibos_settings/supervisor.conf /etc/supervisor/conf.d/mdid.conf
+RUN chown mdid:mdid log
+
+COPY ./docker/start.sh /opt/mdid
 
 EXPOSE 8080
-CMD ["gunicorn", "-b", "0.0.0.0:8080", "rooibos.wsgi:application", "--log-config", "docker/gunicorn-logging.conf"]
+CMD ["/opt/mdid/start.sh"]

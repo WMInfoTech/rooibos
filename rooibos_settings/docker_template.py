@@ -8,6 +8,8 @@ from .base import *
 
 DEBUG = False
 
+CELERY_BROKER_URL = get_env_setting('CELERY_BROKER_URL')
+
 # "https://cas.wm.edu/cas/"
 CAS_SERVER_URL = get_env_setting('CAS_SERVER_URL')
 
