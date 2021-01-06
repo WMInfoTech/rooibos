@@ -19,7 +19,7 @@ RUN apt-get update \
     && rm -Rf /var/lib/apt/lists
 
 # Actually start installing MDID itself
-COPY . /opt/mdid
+COPY --chown=mdid . /opt/mdid
 WORKDIR /opt/mdid
 
 ENV DJANGO_SETTINGS_MODULE="rooibos_settings.local_settings"
