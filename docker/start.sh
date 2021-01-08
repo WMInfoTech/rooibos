@@ -6,6 +6,7 @@ echo 'export DB_USER='$DB_USER >> /etc/default/supervisor
 echo 'export DB_PASSWORD='$DB_PASSWORD >> /etc/default/supervisor
 echo 'export DB_NAME='$DB_NAME >> /etc/default/supervisor
 echo 'export CELERY_BROKER_URL='$CELERY_BROKER_URL >> /etc/default/supervisor
+echo 'export SOLR_URL='$SOLR_URL >> /etc/default/supervisor
 
 service supervisor start
 
