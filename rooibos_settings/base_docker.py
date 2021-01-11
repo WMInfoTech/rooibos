@@ -7,13 +7,10 @@ import re
 import pymysql
 
 
-def get_env_setting(env_var):
-    if setting := os.getenv(env_var):
-        if os.path.isfile(setting):
-            with open(setting, 'r') as fd:
-                return str(fd.read())
-
-        return setting
+def get_setting(path):
+    if os.path.isfile(path):
+        with open(path, 'r') as fd:
+            return str(fd.read())
 
     return ''
 
@@ -44,10 +41,10 @@ ALLOWED_HOSTS = ['*']
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': get_env_setting('DB_NAME'),
-        'USER': get_env_setting('DB_USER'),
-        'PASSWORD': get_env_setting('DB_PASSWORD'),
-        'HOST': get_env_setting('DB_HOST'),
+        'NAME': get_setting('/etc/opt/mdid/db/database'),
+        'USER': get_setting('/etc/opt/mdid/db/username'),
+        'PASSWORD': get_setting('/etc/opt/mdid/db/password'),
+        'HOST': get_setting('/etc/opt/mdid/db/host'),
         'PORT': '',
         'OPTIONS': {
             'use_unicode': True,

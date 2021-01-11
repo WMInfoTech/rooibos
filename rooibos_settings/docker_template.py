@@ -8,18 +8,18 @@ from .base import *
 
 DEBUG = False
 
-CELERY_BROKER_URL = get_env_setting('CELERY_BROKER_URL')
+CELERY_BROKER_URL = get_setting('/etc/opt/mdid/config/celery_broker_url')
 
 # "https://cas.wm.edu/cas/"
-CAS_SERVER_URL = get_env_setting('CAS_SERVER_URL')
+CAS_SERVER_URL = get_setting('/etc/opt/mdid/config/cas_server_url')
 
-SECRET_KEY = get_env_setting('SECRET_KEY')
+SECRET_KEY = get_setting('/etc/opt/mdid/config/secret_key')
 if SECRET_KEY == '':
     SECRET_KEY = 'default'
 
-SOLR_URL = get_env_setting('SOLR_URL')
+SOLR_URL = get_setting('/etc/opt/mdid/config/solr_url')
 
-HELP_URL = get_env_setting('HELP_URL') # "http://mdid.org/help/"
+HELP_URL = get_setting('/etc/opt/mdid/config/help_url')
 
 LOGO_URL = "/static/images/wmdid.png"
 FAVICON_URL = None
@@ -41,7 +41,7 @@ DATABASE_OPTIONS = {
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': get_env_setting('CACHE_BACKEND'),
+        'LOCATION': get_setting('/etc/opt/mdid/config/cache_backend'),
         'KEY_PREFIX': INSTANCE_NAME,
     }
 }
@@ -58,7 +58,7 @@ AUTHENTICATION_BACKENDS = (
 # Needed to enable compression JS and CSS files
 COMPRESS = True
 MEDIA_URL = '/media/'
-MEDIA_ROOT = get_env_setting('MEDIA_ROOT')
+MEDIA_ROOT = get_setting('/etc/opt/mdid/config/media_root')
 
 ADMINS = (
 #    ("Your name", "your@email.example"),
