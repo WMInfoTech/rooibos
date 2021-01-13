@@ -43,8 +43,14 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': get_setting('/etc/opt/mdid/config/cache_backend'),
         'KEY_PREFIX': INSTANCE_NAME,
+    },
+    'compressor': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'compressor',
     }
 }
+
+COMPRESS_CACHE_BACKEND = "compressor"
 
 INSTALLED_APPS += ("django_cas_ng",)
 
